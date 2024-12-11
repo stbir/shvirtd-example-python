@@ -1,0 +1,18 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY . .
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV DB_HOST=172.20.0.10
+ENV DB_TABLE=requests
+ENV DB_USER=app
+ENV DB_NAME=virtd
+ENV DB_PASSWORD=db_pass
+
+RUN groupadd -r app && useradd -r -g app -u 1001 app
+
+USER app
+
+CMD ["python", "main.py"]
